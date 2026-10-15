@@ -11,23 +11,6 @@ const filenameInput = document.getElementById('filename');
 const downloadBtn = document.getElementById('downloadBtn');
 const loadBtn = document.getElementById('loadBtn');
 
-// モーダル関連の要素
-const downloadModal = document.getElementById('downloadModal');
-const modalFilenameInput = document.getElementById('modal-filename');
-const startDownloadBtn = document.getElementById('startDownloadBtn');
-const closeModalBtn = document.querySelector('.modal .close');
-
-// フォーマット選択のチェックボックス
-const formatMd = document.getElementById('format-md');
-const formatPdf = document.getElementById('format-pdf');
-const formatDocx = document.getElementById('format-docx');
-const formatHtml = document.getElementById('format-html');
-
-// プログレスバーの要素
-const progressOverlay = document.getElementById('progressOverlay');
-const progressBar = document.querySelector('.progress-bar .progress');
-const progressText = document.querySelector('.progress-container p');
-
 // カスタムレンダラーの作成
 const renderer = new marked.Renderer();
 
@@ -336,7 +319,7 @@ function hideProgressBar() {
 function downloadAsMarkdown(fileName) {
     return new Promise((resolve) => {
         let mdFileName = fileName;
-        if (!mdFileName.endsWith('.md')) {
+        if (!/\.md$/i.test(mdFileName)) {
             mdFileName += '.md';
         }
         const text = editor.value;
@@ -515,25 +498,19 @@ body {
     return styles;
 }
 
-// ダウンロードボタンのイベント
-downloadBtn.addEventListener('click', showDownloadModal);
-
-// モーダルのイベント
-closeModalBtn.addEventListener('click', closeDownloadModal);
-startDownloadBtn.addEventListener('click', startDownload);
-
-// モーダル外クリックで閉じる
-window.addEventListener('click', function(event) {
-    if (event.target == downloadModal) {
-        closeDownloadModal();
-    }
+// ダウンロードボタンのイベント（Markdown形式で直接保存）
+downloadBtn.addEventListener('click', function() {
+    let fileName = filenameInput.value.trim() || 'document';
+    fileName = fileName.replace(/[/\\?%*:|"<>]/g, '');
+    fileName = fileName.trim() || 'document';
+    downloadAsMarkdown(fileName);
 });
 
 // Ctrl + S ショートカットキーの設定
 document.addEventListener('keydown', function(e) {
     if (e.ctrlKey && e.key === 's') {
         e.preventDefault();
-        showDownloadModal();
+        downloadBtn.click();
     }
 });
 

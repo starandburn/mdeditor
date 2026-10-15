@@ -34,7 +34,7 @@
 <body>
     <header id="app-header">
         <span class="app-title">Markdownエディター かんたんmdくん for NKK</span>
-        <span id="app-version">Version 1.3.0</span>
+        <span id="app-version">Version 1.3.1</span>
     </header>
 
     <!-- エディタコンテナ -->
@@ -74,37 +74,6 @@
                 </h2>
                 <div id="preview"></div>
             </section>
-        </div>
-    </div>
-
-<!-- ダウンロード用のモーダルウィンドウ -->
-<div id="downloadModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>ダウンロードオプション</h2>
-        <label for="modal-filename">ファイル名:</label>
-        <input type="text" id="modal-filename">
-        <p>ダウンロード形式を選択してください:</p>
-        <label><input type="checkbox" id="format-md" checked> Markdown (.md)</label><br>
-        <label><input type="checkbox" id="format-html"> HTML (.html)</label><br>
-        <label><input type="checkbox" id="format-pdf"> PDF (.pdf) ※非推奨</label><br>
-
-        <p class="pdf-recommendation">
-            ※上記PDFダウンロードは、数式のレイアウトが崩れてしまいます。<strong>htmlファイルをダウンロードし、ブラウザの印刷機能からPDFを保存する</strong>ことを推奨します。
-        </p>
-
-        <label><input type="checkbox" id="format-docx" disabled> Word (.docx) - 準備中</label><br>
-        <button id="startDownloadBtn">ダウンロード開始</button>
-    </div>
-</div>
-
-    <!-- プログレスバー -->
-    <div id="progressOverlay" class="overlay">
-        <div class="progress-container">
-            <p>ファイルを生成中...</p>
-            <div class="progress-bar">
-                <div class="progress"></div>
-            </div>
         </div>
     </div>
 
