@@ -77,21 +77,24 @@ body {
 #editor-area {
     display: flex;
     flex-grow: 1;
+    gap: 16px;
+    padding: 16px;
+    box-sizing: border-box;
+    background-color: #f1f3f5;
     overflow: hidden; /* 全体のスクロールを防止 */
 }
 
 #editor, #preview {
-    width: 50%;
+    flex: 1 1 0;
     height: 100%;
     padding: 20px;
     box-sizing: border-box;
+    border: 1px solid #adb5bd;
     overflow-y: auto; /* 個別にスクロール可能に */
 }
 
 #editor {
     resize: none;
-    border: none;
-    border-right: 1px solid #ddd;
     font-size: 16px;
     line-height: 1.6;
 }
