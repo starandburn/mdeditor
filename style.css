@@ -38,7 +38,7 @@ body {
     align-items: center;
     gap: 4px;
     padding: 8px 16px;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     text-align: center;
 }
 
@@ -116,14 +116,42 @@ body {
     letter-spacing: 0.04em;
 }
 
+.editor-pane-input .pane-heading {
+    border-left-color: #7196D2;
+    background-color: #24354F;
+    color: #F0F4FA;
+}
+
+.editor-pane-preview .pane-heading {
+    border-left-color: #526B91;
+    background-color: #F1F4F8;
+    color: #263C59;
+}
+
 #editor {
     resize: none;
-    font-size: 16px;
+    background-color: #1E2633;
+    border-color: #3C4B61;
+    color: #E5EAF2;
+    caret-color: #FFFFFF;
+    font-size: 18px;
     line-height: 1.6;
+}
+
+#editor::selection {
+    background-color: #526B91;
+    color: #FFFFFF;
+}
+
+#editor:focus {
+    outline: 2px solid #7196D2;
+    outline-offset: -2px;
 }
 
 #preview {
     background-color: #fff;
+    border-color: #C6D0DD;
+    color: #263C59;
 }
 
 /* プレビュー内のテキストスタイル */
@@ -146,13 +174,13 @@ body {
 }
 
 #preview p {
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.8;
     margin-bottom: 15px;
 }
 
 #preview li {
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.8;
     margin-bottom: 5px;
 }
