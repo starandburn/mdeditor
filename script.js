@@ -43,8 +43,110 @@ function updatePreview() {
     }
 }
 
+const AUTORECOVERY_KEY = 'mdeditor.autorecovery';
+const AUTORECOVERY_DELAY = 1000;
+const AUTORECOVERY_MAX_AGE = 3 * 60 * 60 * 1000;
+let autorecoveryTimer = null;
+
+function clearAutorecovery() {
+    try {
+        localStorage.removeItem(AUTORECOVERY_KEY);
+    } catch (error) {
+        // localStorageが利用できない環境でも編集は継続する。
+    }
+}
+
+function saveAutorecovery() {
+    if (!editor.value) {
+        clearAutorecovery();
+        return;
+    }
+
+    const draft = {
+        markdown: editor.value,
+        filename: filenameInput.value,
+        savedAt: Date.now()
+    };
+
+    try {
+        localStorage.setItem(AUTORECOVERY_KEY, JSON.stringify(draft));
+    } catch (error) {
+        // 保存容量超過やプライベートブラウズ等では何もしない。
+    }
+}
+
+function cancelAutorecovery() {
+    if (autorecoveryTimer === null) return;
+    clearTimeout(autorecoveryTimer);
+    autorecoveryTimer = null;
+}
+
+function scheduleAutorecovery() {
+    cancelAutorecovery();
+
+    if (!editor.value) {
+        clearAutorecovery();
+        return;
+    }
+
+    autorecoveryTimer = setTimeout(function() {
+        autorecoveryTimer = null;
+        saveAutorecovery();
+    }, AUTORECOVERY_DELAY);
+}
+
+function readAutorecovery() {
+    let rawDraft;
+
+    try {
+        rawDraft = localStorage.getItem(AUTORECOVERY_KEY);
+    } catch (error) {
+        return null;
+    }
+
+    if (!rawDraft) return null;
+
+    try {
+        const draft = JSON.parse(rawDraft);
+        const age = Date.now() - draft.savedAt;
+        if (
+            !draft ||
+            typeof draft.markdown !== 'string' ||
+            !draft.markdown ||
+            typeof draft.filename !== 'string' ||
+            !Number.isFinite(draft.savedAt) ||
+            age < 0 ||
+            age > AUTORECOVERY_MAX_AGE
+        ) {
+            clearAutorecovery();
+            return null;
+        }
+        return draft;
+    } catch (error) {
+        clearAutorecovery();
+        return null;
+    }
+}
+
+function restoreAutorecovery() {
+    const draft = readAutorecovery();
+    if (!draft) return;
+
+    const message = '前回の編集内容が一時保存されています。復元しますか？\n\n※一時保存は誤操作からの復旧用です。作業の保存にはダウンロードを使用してください。';
+    if (!confirm(message)) {
+        clearAutorecovery();
+        return;
+    }
+
+    editor.value = draft.markdown;
+    filenameInput.value = draft.filename;
+    updatePreview();
+}
+
 // エディタの入力イベント
 editor.addEventListener('input', updatePreview);
+editor.addEventListener('input', scheduleAutorecovery);
+filenameInput.addEventListener('input', scheduleAutorecovery);
 
 copyMarkdownBtn.addEventListener('click', async function() {
     if (!editor.value) {
@@ -71,6 +173,9 @@ copyMarkdownBtn.addEventListener('click', async function() {
 clearMarkdownBtn.addEventListener('click', function() {
     if (!confirm('Markdownの内容をすべて削除しますか？')) return;
 
+    cancelAutorecovery();
+    clearAutorecovery();
+
     editor.focus();
     editor.setSelectionRange(0, editor.value.length);
     const cleared = document.execCommand('insertText', false, '');
@@ -87,6 +192,7 @@ clearMarkdownBtn.addEventListener('click', function() {
     preview.scrollLeft = 0;
     whitespaceOverlay.scrollTop = 0;
     whitespaceOverlay.scrollLeft = 0;
+    clearAutorecovery();
 });
 
 // 空白文字可視化の表示を更新（入力値自体は変更しない）
@@ -224,10 +330,10 @@ editor.addEventListener('compositionend', function() {
     updateWhitespaceOverlay();
 });
 
-// ページ離脱時の警告
-window.addEventListener('beforeunload', function (e) {
-    e.preventDefault();
-    e.returnValue = '';
+// ページ終了時は保留中の自動保存を同期的に実行する。
+window.addEventListener('pagehide', function() {
+    cancelAutorecovery();
+    saveAutorecovery();
 });
 
 function downloadAsMarkdown(fileName) {
@@ -272,6 +378,7 @@ function loadMarkdown(event) {
             reader.onload = function(e) {
                 editor.value = e.target.result;
                 updatePreview();
+                scheduleAutorecovery();
             };
             reader.readAsText(file);
         }
@@ -285,3 +392,4 @@ loadBtn.addEventListener('click', loadMarkdown);
 // 初期プレビューの表示
 editorWrapper.classList.toggle('whitespace-visible', showWhitespace.checked);
 updatePreview();
+restoreAutorecovery();
