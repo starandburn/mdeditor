@@ -44,7 +44,7 @@ function updatePreview() {
     updateWhitespaceOverlay();
     const htmlContent = marked(rawMarkdown, {
         renderer: renderer,
-        breaks: true, // 改行を反映
+        breaks: false, // CommonMark準拠の改行処理
         gfm: true
     });
     preview.innerHTML = htmlContent;
