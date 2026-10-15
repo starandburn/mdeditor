@@ -4,6 +4,7 @@ const preview = document.getElementById('preview');
 const editorWrapper = document.getElementById('editor-wrapper');
 const whitespaceOverlay = document.getElementById('whitespace-overlay');
 const showWhitespace = document.getElementById('showWhitespace');
+const syncScroll = document.getElementById('syncScroll');
 const filenameInput = document.getElementById('filename');
 const downloadBtn = document.getElementById('downloadBtn');
 const loadBtn = document.getElementById('loadBtn');
@@ -153,7 +154,38 @@ function syncWhitespaceScroll() {
     whitespaceOverlay.scrollLeft = editor.scrollLeft;
 }
 
-editor.addEventListener('scroll', syncWhitespaceScroll);
+let scrollSyncSource = null;
+
+function syncScrollPosition(source, target) {
+    if (!syncScroll.checked) return;
+    if (scrollSyncSource === source) {
+        scrollSyncSource = null;
+        return;
+    }
+
+    const sourceMax = Math.max(0, source.scrollHeight - source.clientHeight);
+    const targetMax = Math.max(0, target.scrollHeight - target.clientHeight);
+    const ratio = sourceMax > 0 ? source.scrollTop / sourceMax : 0;
+    const targetScrollTop = Math.min(targetMax, Math.max(0, ratio * targetMax));
+
+    if (Math.abs(target.scrollTop - targetScrollTop) < 1) return;
+
+    scrollSyncSource = target;
+    target.scrollTop = targetScrollTop;
+}
+
+editor.addEventListener('scroll', function() {
+    syncWhitespaceScroll();
+    syncScrollPosition(editor, preview);
+});
+
+preview.addEventListener('scroll', function() {
+    syncScrollPosition(preview, editor);
+});
+
+syncScroll.addEventListener('change', function() {
+    if (syncScroll.checked) syncScrollPosition(editor, preview);
+});
 
 editor.addEventListener('compositionstart', function() {
     editorWrapper.classList.add('ime-composing');

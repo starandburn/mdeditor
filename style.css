@@ -144,9 +144,23 @@ body {
 }
 
 .editor-pane-preview .pane-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-left-color: #526B91;
     background-color: #F1F4F8;
     color: #263C59;
+}
+
+.scroll-sync-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #263C59;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: normal;
+    letter-spacing: normal;
 }
 
 #editor {

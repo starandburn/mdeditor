@@ -34,7 +34,7 @@
 <body>
     <header id="app-header">
         <span class="app-title">Markdownエディター かんたんmdくん for NKK</span>
-        <span id="app-version">Version 1.1.2</span>
+        <span id="app-version">Version 1.2.0</span>
     </header>
 
     <!-- エディタコンテナ -->
@@ -61,7 +61,13 @@
                 </div>
             </section>
             <section class="editor-pane editor-pane-preview">
-                <h2 class="pane-heading">プレビュー</h2>
+                <h2 class="pane-heading">
+                    <span>プレビュー</span>
+                    <label class="scroll-sync-toggle">
+                        <input type="checkbox" id="syncScroll" checked>
+                        <span>スクロール同期</span>
+                    </label>
+                </h2>
                 <div id="preview"></div>
             </section>
         </div>
