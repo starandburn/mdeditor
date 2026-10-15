@@ -9,7 +9,7 @@
 - 原作エディタ：[Markdown editor](https://phys-ken.github.io/2024informatics_ic/tools/markdown_edit/)
 - 原作ライセンス：GNU General Public License v3（GNU GPL v3）
 
-本改変版もGNU GPL v3の条件に従います。ライセンス全文は [LICENSE](LICENSE) を参照してください。
+本改変版もGNU GPL v3の条件に従います。ライセンス全文は [LICENSE](LICENSE) またはアプリのフッターにある [GNU GPL v3ライセンス閲覧ページ](license.html) を参照してください。
 
 原作の帰属情報、改変履歴、外部ライブラリのライセンス情報は [NOTICE.md](NOTICE.md) に記載しています。
 

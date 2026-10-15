@@ -403,3 +403,88 @@ body {
 #preview a:hover {
     text-decoration: underline;
 }
+
+/* ライセンスページ */
+.license-page {
+    min-height: 100vh;
+    height: auto;
+    overflow: auto;
+    background-color: #f1f3f5;
+}
+
+.license-page #app-header {
+    flex-shrink: 0;
+}
+
+.license-back-link {
+    color: #fff;
+}
+
+.license-back-link:hover {
+    color: #dbe7f5;
+}
+
+.license-main {
+    flex: 1 0 auto;
+    width: min(100% - 32px, 1100px);
+    margin: 0 auto;
+    padding: 32px 0 40px;
+    box-sizing: border-box;
+}
+
+.license-main h1 {
+    margin: 0 0 24px;
+    color: #152A4A;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.license-intro {
+    margin: 0 0 24px;
+    color: #263C59;
+    line-height: 1.7;
+}
+
+.license-intro a {
+    color: #285A96;
+}
+
+.license-text {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: clamp(16px, 3vw, 32px);
+    border: 1px solid #adb5bd;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #212529;
+    font-family: Consolas, "MS Gothic", monospace;
+    font-size: clamp(0.82rem, 1.4vw, 1rem);
+    line-height: 1.65;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.license-text code {
+    font: inherit;
+}
+
+.license-page #app-footer {
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    .license-main {
+        width: min(100% - 20px, 1100px);
+        padding-top: 24px;
+    }
+
+    .license-page #app-header {
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .license-page .app-title {
+        min-width: 0;
+    }
+}
