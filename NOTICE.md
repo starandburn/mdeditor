@@ -1,0 +1,87 @@
+# NOTICE
+
+## 原作情報
+
+- 原作名：かんたんmdくん
+- 原作者：phys_ken
+- 原作リポジトリ：https://github.com/phys-ken/2024informatics_ic
+- 原作エディタ：https://phys-ken.github.io/2024informatics_ic/tools/markdown_edit/
+- 原作ライセンス：GNU General Public License v3（GNU GPL v3）
+
+作者によるライセンス説明：
+https://note.com/phys_ken/n/n467cd1b13577
+
+## 改変版の目的
+
+原作のMarkdownエディタ部分を独立したGitリポジトリで管理し、教材用Markdownエディタとして学習・演習に利用することを目的とします。
+
+## 改変履歴
+
+- 2026-10-15：原作のMarkdownエディタを独立したGitリポジトリとして管理開始。これはコードの機能変更を意味しません。
+
+## 外部ライブラリ
+
+以下のライブラリをCDN経由で利用しています。ライブラリ本体はこのリポジトリに同梱していません。
+
+### marked
+
+- 正式名称：marked
+- 利用バージョン：2.0.3
+- ライセンス：MIT
+- 著作権表示：対象バージョンの正確な表示は未確認
+- 公式リポジトリ：https://github.com/markedjs/marked
+- ライセンス本文：https://github.com/markedjs/marked/blob/master/LICENSE.md
+
+### highlight.js
+
+- 正式名称：highlight.js
+- 利用バージョン：11.7.0
+- ライセンス：BSD 3-Clause License
+- 著作権表示：Copyright (c) 2006, Ivan Sagalaev.
+- 公式リポジトリ：https://github.com/highlightjs/highlight.js
+- ライセンス本文：https://github.com/highlightjs/highlight.js/blob/main/LICENSE
+
+### MathJax
+
+- 正式名称：MathJax
+- 利用バージョン：3（CDN URLは`@3`指定で、具体的な3.xバージョンは未指定）
+- ライセンス：Apache License 2.0
+- 著作権表示：利用中の具体的配布物に含まれる表示は未確認
+- 公式リポジトリ：https://github.com/mathjax/MathJax
+- ライセンス本文：https://www.apache.org/licenses/LICENSE-2.0
+
+### jsPDF
+
+- 正式名称：jsPDF
+- 利用バージョン：2.5.1
+- ライセンス：MIT License
+- 著作権表示：Copyright (c) 2010-2021 James Hall; Copyright (c) 2015-2021 yWorks GmbH
+- 公式リポジトリ：https://github.com/parallax/jsPDF
+- ライセンス本文：https://github.com/parallax/jsPDF/blob/v2.5.1/LICENSE
+
+### html2pdf.js
+
+- 正式名称：html2pdf.js
+- 利用バージョン：0.10.1
+- ライセンス：MIT License
+- 著作権表示：Copyright (c) 2017 Erik Koopmans
+- 公式リポジトリ：https://github.com/eKoopmans/html2pdf.js
+- ライセンス本文：https://github.com/eKoopmans/html2pdf.js/blob/v0.10.1/LICENSE
+
+### mammoth.js
+
+- 正式名称：mammoth.js
+- 利用バージョン：1.4.14
+- ライセンス：BSD 2-Clause License
+- 著作権表示：Copyright (c) 2013, Michael Williamson
+- 公式リポジトリ：https://github.com/mwilliamson/mammoth.js
+- ライセンス本文：https://github.com/mwilliamson/mammoth.js/blob/master/LICENSE
+
+## 未確認事項
+
+以下は、今回の調査時点で対象配布物を直接確認できていない事項です。未確認情報を推測で補完していません。
+
+- marked 2.0.3の正確な著作権表示
+- MathJaxの具体的な3.xバージョンとNOTICEの内容
+- html2pdf.jsのバンドル内依存ライセンス
+- mammoth.js 1.4.14の対象配布物に含まれる依存ライセンス

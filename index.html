@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>かんたんmdくん</title>
+    <!-- 外部ライブラリの読み込み -->
+    <!-- marked.js のバージョンを 2.0.3 に設定 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/2.0.3/marked.min.js"></script>
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <!-- MathJaxの読み込み -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" defer></script>
+    <!-- jsPDFとhtml2pdf.jsの読み込み -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- mammoth.jsの読み込み -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.14/mammoth.browser.min.js"></script>
+    <!-- スタイルシートの読み込み -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- チートシート -->
+<div id="cheatsheet">
+    <h3>かんたんmdくん</h3> <!-- これはサービス名 -->
+    <h4 class="section-title">markdown</h4>
+    <p><strong># 見出し1</strong></p>
+    <p><strong>## 見出し2</strong></p>
+    <p><strong>### 見出し3</strong></p>
+    <p><em>**太字**</em></p>
+    <p><em>*斜体*</em></p>
+    <p>- リスト項目</p>
+    <p>1. 番号付きリスト</p>
+    <p>[リンク](URL)</p>
+    <p>![画像](URL)</p>
+    <p>`短いコード`</p>
+    <p>
+        ```python <br>
+            print("コードブロック") <br>
+        ```<br>
+    </p>
+    <h4 class="section-title">数式(行列非対応)</h4>
+    <p>インライン数式: <br>
+     <code>$y = ax$</code></p>
+    <p>ブロック数式:</p>
+    <p><code>$$</code></p>
+    <p><code>PV = nRT</code></p>
+    <p><code>$$</code></p>
+</div>
+
+    <!-- エディタコンテナ -->
+    <div id="editor-container">
+        <!-- 上部の操作パネル -->
+        <div id="editor-toolbar">
+            <input type="text" id="filename" placeholder="ファイル名（拡張子不要）">
+            <button id="loadBtn">ファイルを開く</button>
+            <button id="downloadBtn">ダウンロード</button>
+        </div>
+        <!-- エディタとプレビューエリア -->
+        <div id="editor-area">
+            <textarea id="editor" placeholder="ここにMarkdownを入力してください..."></textarea>
+            <div id="preview"></div>
+        </div>
+    </div>
+
+<!-- ダウンロード用のモーダルウィンドウ -->
+<div id="downloadModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>ダウンロードオプション</h2>
+        <label for="modal-filename">ファイル名:</label>
+        <input type="text" id="modal-filename">
+        <p>ダウンロード形式を選択してください:</p>
+        <label><input type="checkbox" id="format-md" checked> Markdown (.md)</label><br>
+        <label><input type="checkbox" id="format-html"> HTML (.html)</label><br>
+        <label><input type="checkbox" id="format-pdf"> PDF (.pdf) ※非推奨</label><br>
+
+        <p class="pdf-recommendation">
+            ※上記PDFダウンロードは、数式のレイアウトが崩れてしまいます。<strong>htmlファイルをダウンロードし、ブラウザの印刷機能からPDFを保存する</strong>ことを推奨します。
+        </p>
+
+        <label><input type="checkbox" id="format-docx" disabled> Word (.docx) - 準備中</label><br>
+        <button id="startDownloadBtn">ダウンロード開始</button>
+    </div>
+</div>
+
+    <!-- プログレスバー -->
+    <div id="progressOverlay" class="overlay">
+        <div class="progress-container">
+            <p>ファイルを生成中...</p>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- スクリプトの読み込み -->
+    <script src="script.js"></script>
+</body>
+</html>

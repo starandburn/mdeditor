@@ -1,0 +1,284 @@
+/* 全体のスタイル */
+body {
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    overflow: hidden; /* ページ全体のスクロールを防止 */
+}
+
+/* チートシートのスタイル */
+#cheatsheet {
+    width: 220px;
+    background-color: #333; /* 背景色を濃いグレーに設定 */
+    padding: 15px;
+    overflow-y: auto;
+    border-right: 1px solid #ddd;
+    color: white; /* 全体的なテキストカラーを白に */
+    font-family: 'Arial', sans-serif;
+}
+
+/* サービス名のスタイル */
+#cheatsheet h3 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #f7f7f7; /* サービス名の色を白に */
+    margin-top: 0;
+    text-align: center;
+}
+
+/* セクションタイトルのスタイル */
+#cheatsheet .section-title {
+    font-size: 16px;
+    margin-top: 20px;
+    color: #ddd; /* セクションタイトルを少し薄いグレーに */
+    border-bottom: 1px solid #555; /* 境界線も濃いグレー */
+    padding-bottom: 5px;
+}
+
+/* Markdown記法の要素は白で表示 */
+#cheatsheet p {
+    font-size: 14px;
+    margin: 8px 0;
+    color: white; /* Markdown記法要素は白 */
+}
+
+/* サンプル部分（コードや数式）のスタイル */
+#cheatsheet code, #cheatsheet .sample {
+    background-color: #444; /* サンプル部分の背景を暗めの灰色に */
+    padding: 2px 4px;
+    border-radius: 3px;
+    color: #ccc; /* サンプル部分のテキストを薄い灰色に */
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* コードのスタイルを強調 */
+#cheatsheet p strong {
+    font-weight: bold;
+    color: white; /* 太字要素も白 */
+}
+
+#cheatsheet p em {
+    font-style: italic;
+    color: #ddd; /* 斜体部分を少し薄い色に */
+}
+
+/* 数式エリア */
+#cheatsheet .section-title + p code {
+    background-color: #444; /* 数式部分もサンプルエリアと同じスタイルに */
+    color: #ccc;
+}
+/* エディタコンテナのスタイル */
+#editor-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* ツールバーのスタイル */
+#editor-toolbar {
+    display: flex;
+    padding: 10px;
+    background-color: #fafafa;
+    border-bottom: 1px solid #ddd;
+}
+
+#filename {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 5px;
+}
+
+#loadBtn, #downloadBtn {
+    padding: 5px 10px;
+    margin-right: 5px;
+}
+
+/* エディタとプレビューエリア */
+#editor-area {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden; /* 全体のスクロールを防止 */
+}
+
+#editor, #preview {
+    width: 50%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto; /* 個別にスクロール可能に */
+}
+
+#editor {
+    resize: none;
+    border: none;
+    border-right: 1px solid #ddd;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+#preview {
+    background-color: #fff;
+}
+
+/* プレビュー内のテキストスタイル */
+#preview h1 {
+    font-size: 28px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#preview h2 {
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#preview h3 {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#preview p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+#preview li {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 5px;
+}
+
+#preview blockquote {
+    border-left: 4px solid #ddd;
+    padding-left: 15px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+#preview pre {
+    background-color: #f5f5f5;
+    padding: 15px;
+    overflow-x: auto;
+    margin-bottom: 15px;
+}
+
+#preview code {
+    font-family: monospace;
+    background-color: #f5f5f5;
+    padding: 2px 4px;
+}
+
+#preview a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+#preview a:hover {
+    text-decoration: underline;
+}
+
+/* モーダルウィンドウのスタイル */
+.modal {
+    display: none; /* 初期状態では非表示 */
+    position: fixed;
+    z-index: 1000; /* 他の要素より前面に表示 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* 必要に応じてスクロール */
+    background-color: rgba(0,0,0,0.5); /* 背景の半透明ブラック */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto; /* 上下中央に配置 */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal h2 {
+    margin-top: 0;
+}
+
+.modal label {
+    display: block;
+    margin-top: 10px;
+}
+
+.modal input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+#startDownloadBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* プログレスバーのスタイル */
+.overlay {
+    display: none; /* 初期状態では非表示 */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5); /* 背景の半透明ブラック */
+    justify-content: center;
+    align-items: center;
+}
+
+.progress-container {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: #f3f3f3;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+}
+
+.progress-bar .progress {
+    width: 0%;
+    height: 20px;
+    background-color: #4caf50;
+}
+
+.pdf-recommendation {
+    margin-top: 1px;
+    color: #555;
+    font-size: 0.9em;
+}
