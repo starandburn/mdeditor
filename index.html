@@ -34,7 +34,7 @@
 <body>
     <header id="app-header">
         <span class="app-title">Markdownエディター かんたんmdくん for NKK</span>
-        <span id="app-version">Version 1.0.1</span>
+        <span id="app-version">Version 1.0.2</span>
     </header>
 
     <!-- エディタコンテナ -->
@@ -47,8 +47,14 @@
         </div>
         <!-- エディタとプレビューエリア -->
         <div id="editor-area">
-            <textarea id="editor" placeholder="ここにMarkdownを入力してください..."></textarea>
-            <div id="preview"></div>
+            <section class="editor-pane">
+                <h2 class="pane-heading">マークダウン入力</h2>
+                <textarea id="editor"></textarea>
+            </section>
+            <section class="editor-pane">
+                <h2 class="pane-heading">プレビュー</h2>
+                <div id="preview"></div>
+            </section>
         </div>
     </div>
 
