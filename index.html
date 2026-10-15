@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>かんたんmdくん for NKK</title>
+    <title>Markdownエディター かんたんmdくん for NKK</title>
     <!-- 外部ライブラリの読み込み -->
     <!-- marked.js のバージョンを 2.0.3 に設定 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/2.0.3/marked.min.js"></script>
@@ -32,6 +32,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header id="app-header">
+        <span class="app-title">Markdownエディター かんたんmdくん for NKK</span>
+        <span id="app-version">Version 1.0.0</span>
+    </header>
+
     <!-- エディタコンテナ -->
     <div id="editor-container">
         <!-- 上部の操作パネル -->
@@ -79,6 +84,11 @@
     </div>
 
     <!-- スクリプトの読み込み -->
+    <footer id="app-footer">
+        <span>© 2026 日本国際工科専門学校 IT教育部</span>
+        <span>本ツールは、<a href="LICENSE">GNU GPL v3ライセンス</a>に基づき、phys_ken氏の「かんたんmdくん」を授業用に改変したものです。</span>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
