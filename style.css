@@ -258,6 +258,40 @@ body {
     color: #263C59;
 }
 
+#preview table {
+    width: max-content;
+    max-width: 100%;
+    border: 1px solid #C6D0DD;
+    border-collapse: collapse;
+    color: #263C59;
+}
+
+#preview th,
+#preview td {
+    padding: 8px 12px;
+    border: 1px solid #C6D0DD;
+    text-align: left;
+}
+
+#preview th[align="center"],
+#preview td[align="center"] {
+    text-align: center;
+}
+
+#preview th[align="right"],
+#preview td[align="right"] {
+    text-align: right;
+}
+
+#preview thead th {
+    background-color: #E8EEF5;
+    font-weight: 700;
+}
+
+#preview tbody tr:nth-child(even) {
+    background-color: #F8FAFC;
+}
+
 /* プレビュー内のテキストスタイル */
 #preview h1 {
     font-size: 28px;
@@ -298,15 +332,31 @@ body {
 
 #preview pre {
     background-color: #f5f5f5;
-    padding: 15px;
+    padding: 16px 20px;
     overflow-x: auto;
     margin-bottom: 15px;
+    font-size: 18px;
+    line-height: 1.6;
 }
 
 #preview code {
     font-family: monospace;
     background-color: #f5f5f5;
     padding: 2px 4px;
+}
+
+#preview :is(p, li, td, th, blockquote, h1, h2, h3, h4, h5, h6) code {
+    font-size: 1.05em;
+}
+
+#preview :is(td, th) code {
+    font-size: 1.2em;
+}
+
+#preview pre code {
+    font-size: 18px;
+    line-height: inherit;
+    padding: 0;
 }
 
 #preview a {
