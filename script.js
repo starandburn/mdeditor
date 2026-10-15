@@ -84,6 +84,67 @@ showWhitespace.addEventListener('change', function() {
 });
 
 editor.addEventListener('input', updateWhitespaceOverlay);
+
+// Markdown入力欄ではTabを半角スペース4個の入力として扱う
+editor.addEventListener('keydown', function(event) {
+    if (
+        event.key !== 'Tab' ||
+        event.isComposing ||
+        editorWrapper.classList.contains('ime-composing')
+    ) {
+        return;
+    }
+
+    if (event.shiftKey) {
+        event.preventDefault();
+
+        const value = editor.value;
+        const selectionStart = editor.selectionStart;
+        const selectionEnd = editor.selectionEnd;
+        const lineStart = value.lastIndexOf('\n', selectionStart - 1) + 1;
+        let spacesToRemove = 0;
+
+        while (
+            spacesToRemove < 4 &&
+            value.charAt(lineStart + spacesToRemove) === ' '
+        ) {
+            spacesToRemove++;
+        }
+
+        if (spacesToRemove === 0) return;
+
+        const removalEnd = lineStart + spacesToRemove;
+        const adjustedStart = Math.max(lineStart, selectionStart - spacesToRemove);
+        const adjustedEnd = Math.max(lineStart, selectionEnd - spacesToRemove);
+
+        editor.focus();
+        editor.setSelectionRange(lineStart, removalEnd);
+        const removed = document.execCommand('insertText', false, '');
+
+        if (!removed) {
+            editor.setRangeText('', lineStart, removalEnd, 'end');
+            editor.dispatchEvent(new Event('input', {bubbles: true}));
+        }
+
+        editor.setSelectionRange(adjustedStart, adjustedEnd);
+        return;
+    }
+
+    event.preventDefault();
+    const start = editor.selectionStart;
+    const end = editor.selectionEnd;
+    editor.focus();
+
+    // execCommandはtextareaの標準Undo履歴へ登録されるため、まずこちらを試す
+    const inserted = document.execCommand('insertText', false, '    ');
+    if (!inserted) {
+        // 対応しない環境でも入力文字を失わないためのフォールバック。
+        // この場合、ブラウザー標準のUndo登録は保証されない。
+        editor.setRangeText('    ', start, end, 'end');
+        editor.dispatchEvent(new Event('input', {bubbles: true}));
+    }
+});
+
 editor.addEventListener('scroll', function() {
     whitespaceOverlay.scrollTop = editor.scrollTop;
     whitespaceOverlay.scrollLeft = editor.scrollLeft;
