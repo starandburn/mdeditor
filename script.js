@@ -76,6 +76,7 @@ function updateWhitespaceOverlay() {
     if (!showWhitespace.checked) return;
     whitespaceOverlay.textContent = '';
     whitespaceOverlay.innerHTML = escapeOverlayText(editor.value);
+    syncWhitespaceScroll();
 }
 
 showWhitespace.addEventListener('change', function() {
@@ -145,10 +146,14 @@ editor.addEventListener('keydown', function(event) {
     }
 });
 
-editor.addEventListener('scroll', function() {
+function syncWhitespaceScroll() {
+    if (!showWhitespace.checked) return;
+
     whitespaceOverlay.scrollTop = editor.scrollTop;
     whitespaceOverlay.scrollLeft = editor.scrollLeft;
-});
+}
+
+editor.addEventListener('scroll', syncWhitespaceScroll);
 
 editor.addEventListener('compositionstart', function() {
     editorWrapper.classList.add('ime-composing');

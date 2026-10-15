@@ -163,10 +163,12 @@ body {
     font-family: var(--editor-font-family);
     font-weight: normal;
     font-size: 18px;
-    line-height: 1.6;
+    line-height: 28.8px;
     white-space: pre-wrap;
     overflow-wrap: break-word;
+    word-break: normal;
     tab-size: 4;
+    scrollbar-gutter: stable;
 }
 
 #whitespace-overlay {
@@ -175,19 +177,38 @@ body {
     inset: 1px;
     box-sizing: border-box;
     padding: 20px;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
     background-color: #1E2633;
     color: #E5EAF2;
     font-family: var(--editor-font-family);
     font-weight: normal;
     font-size: 18px;
-    line-height: 1.6;
+    line-height: 28.8px;
     letter-spacing: normal;
     white-space: pre-wrap;
     overflow-wrap: break-word;
+    word-break: normal;
     tab-size: 4;
+    scrollbar-gutter: stable;
+    scrollbar-color: transparent transparent;
     pointer-events: none;
     user-select: none;
+}
+
+#whitespace-overlay::-webkit-scrollbar {
+    background: transparent;
+}
+
+#whitespace-overlay::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+
+/* textareaが確保する末尾の空行分のスクロール領域を合わせる */
+#whitespace-overlay::after {
+    content: '';
+    display: block;
+    height: 28.8px;
 }
 
 .whitespace-space,
