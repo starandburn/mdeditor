@@ -1,6 +1,9 @@
 // 要素の取得
 const editor = document.getElementById('editor');
 const preview = document.getElementById('preview');
+const editorWrapper = document.getElementById('editor-wrapper');
+const whitespaceOverlay = document.getElementById('whitespace-overlay');
+const showWhitespace = document.getElementById('showWhitespace');
 const filenameInput = document.getElementById('filename');
 const downloadBtn = document.getElementById('downloadBtn');
 const loadBtn = document.getElementById('loadBtn');
@@ -38,6 +41,7 @@ renderer.code = function(code, language) {
 // プレビューの更新
 function updatePreview() {
     const rawMarkdown = editor.value;
+    updateWhitespaceOverlay();
     const htmlContent = marked(rawMarkdown, {
         renderer: renderer,
         breaks: true, // 改行を反映
@@ -55,6 +59,44 @@ function updatePreview() {
 
 // エディタの入力イベント
 editor.addEventListener('input', updatePreview);
+
+// 空白文字可視化の表示を更新（入力値自体は変更しない）
+function escapeOverlayText(text) {
+    return Array.from(text, function(char) {
+        if (char === ' ') return '<span class="whitespace-space"> </span>';
+        if (char === '　') return '<span class="whitespace-wide-space">　</span>';
+        return char
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }).join('');
+}
+
+function updateWhitespaceOverlay() {
+    if (!showWhitespace.checked) return;
+    whitespaceOverlay.textContent = '';
+    whitespaceOverlay.innerHTML = escapeOverlayText(editor.value);
+}
+
+showWhitespace.addEventListener('change', function() {
+    editorWrapper.classList.toggle('whitespace-visible', showWhitespace.checked);
+    updateWhitespaceOverlay();
+});
+
+editor.addEventListener('input', updateWhitespaceOverlay);
+editor.addEventListener('scroll', function() {
+    whitespaceOverlay.scrollTop = editor.scrollTop;
+    whitespaceOverlay.scrollLeft = editor.scrollLeft;
+});
+
+editor.addEventListener('compositionstart', function() {
+    editorWrapper.classList.add('ime-composing');
+});
+
+editor.addEventListener('compositionend', function() {
+    editorWrapper.classList.remove('ime-composing');
+    updateWhitespaceOverlay();
+});
 
 // ページ離脱時の警告
 window.addEventListener('beforeunload', function (e) {
@@ -376,4 +418,5 @@ function loadMarkdown(event) {
 loadBtn.addEventListener('click', loadMarkdown);
 
 // 初期プレビューの表示
+editorWrapper.classList.toggle('whitespace-visible', showWhitespace.checked);
 updatePreview();

@@ -48,8 +48,17 @@
         <!-- エディタとプレビューエリア -->
         <div id="editor-area">
             <section class="editor-pane editor-pane-input">
-                <h2 class="pane-heading">マークダウン入力</h2>
-                <textarea id="editor"></textarea>
+                <h2 class="pane-heading">
+                    <span>マークダウン入力</span>
+                    <label class="whitespace-toggle">
+                        <input type="checkbox" id="showWhitespace" checked>
+                        <span>空白を表示</span>
+                    </label>
+                </h2>
+                <div id="editor-wrapper">
+                    <div id="whitespace-overlay" aria-hidden="true"></div>
+                <textarea id="editor" spellcheck="false"></textarea>
+                </div>
             </section>
             <section class="editor-pane editor-pane-preview">
                 <h2 class="pane-heading">プレビュー</h2>
