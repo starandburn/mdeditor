@@ -136,6 +136,28 @@ body {
     letter-spacing: normal;
 }
 
+.editor-heading-actions {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.editor-heading-actions button {
+    padding: 3px 8px;
+    border: 1px solid #7196D2;
+    border-radius: 3px;
+    background-color: #304766;
+    color: #F0F4FA;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.editor-heading-actions button:hover {
+    background-color: #3D587D;
+}
+
 #editor-wrapper {
     position: relative;
     flex: 1 1 0;

@@ -5,6 +5,8 @@ const editorWrapper = document.getElementById('editor-wrapper');
 const whitespaceOverlay = document.getElementById('whitespace-overlay');
 const showWhitespace = document.getElementById('showWhitespace');
 const syncScroll = document.getElementById('syncScroll');
+const copyMarkdownBtn = document.getElementById('copyMarkdownBtn');
+const clearMarkdownBtn = document.getElementById('clearMarkdownBtn');
 const filenameInput = document.getElementById('filename');
 const downloadBtn = document.getElementById('downloadBtn');
 const loadBtn = document.getElementById('loadBtn');
@@ -60,6 +62,49 @@ function updatePreview() {
 
 // エディタの入力イベント
 editor.addEventListener('input', updatePreview);
+
+copyMarkdownBtn.addEventListener('click', async function() {
+    if (!editor.value) {
+        alert('コピーするMarkdownの内容がありません。');
+        return;
+    }
+
+    try {
+        if (!navigator.clipboard || !navigator.clipboard.writeText) {
+            throw new Error('Clipboard API is unavailable');
+        }
+
+        await navigator.clipboard.writeText(editor.value);
+        const originalLabel = copyMarkdownBtn.textContent;
+        copyMarkdownBtn.textContent = 'コピー済み';
+        setTimeout(function() {
+            copyMarkdownBtn.textContent = originalLabel;
+        }, 1500);
+    } catch (error) {
+        alert('Markdownのコピーに失敗しました。');
+    }
+});
+
+clearMarkdownBtn.addEventListener('click', function() {
+    if (!confirm('Markdownの内容をすべて削除しますか？')) return;
+
+    editor.focus();
+    editor.setSelectionRange(0, editor.value.length);
+    const cleared = document.execCommand('insertText', false, '');
+
+    if (!cleared) {
+        editor.value = '';
+        editor.dispatchEvent(new Event('input', {bubbles: true}));
+    }
+
+    editor.setSelectionRange(0, 0);
+    editor.scrollTop = 0;
+    editor.scrollLeft = 0;
+    preview.scrollTop = 0;
+    preview.scrollLeft = 0;
+    whitespaceOverlay.scrollTop = 0;
+    whitespaceOverlay.scrollLeft = 0;
+});
 
 // 空白文字可視化の表示を更新（入力値自体は変更しない）
 function escapeOverlayText(text) {
